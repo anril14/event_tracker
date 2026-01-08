@@ -5,6 +5,31 @@ from fastapi import FastAPI
 
 from app.api.events import event_router
 
+# Testing
+from app.db.queries.orm import EventSyncORM
+from app.schemas.event import Event, Metadata
+
 app = FastAPI()
 
 app.include_router(router=event_router)
+
+# TODO: Alembic миграции
+EventSyncORM.create_tables()
+
+# Testing
+event = Event(
+    event_type='1',
+    metadata=Metadata(
+        page='/event',
+        device_type='pc'
+    ),
+    user_id='123'
+)
+EventSyncORM.insert_data(
+    event
+)
+EventSyncORM.insert_data(
+    event
+)
+
+print(EventSyncORM.get_data())

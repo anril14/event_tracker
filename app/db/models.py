@@ -1,19 +1,30 @@
-from sqlalchemy import Table, Column, Integer, BigInteger, String, MetaData
+import datetime
+import enum
+
+from sqlalchemy import text
 from sqlalchemy.orm import Mapped, mapped_column
 from app.db.database import Base
 
 
-class UsersOrm(Base):
-    __tablename__: str = 'users'
+class DeviceType(enum.Enum):
+    mobile = 'mobile'
+    pc = 'pc'
+
+
+class EventsOrm(Base):
+    __tablename__: str = 'events'
+
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str]
+    event_type: Mapped[str]
+    user_id: Mapped[str]
+    sent_at: Mapped[datetime.datetime] = mapped_column(server_default=text("TIMEZONE('utc', now())"))
+    page: Mapped[str]
+    device_type: Mapped[DeviceType]
 
-
-metadata_obj = MetaData()
-
-users_table = Table(
-    'users',
-    metadata_obj,
-    Column('id', BigInteger, primary_key=True),
-    Column('username', String)
-)
+    def __repr__(self):
+        return (f'id = {self.id} \n'
+                f'event_type = {self.event_type} \n'
+                f'user_id = {self.user_id} \n'
+                f'sent_at = {self.sent_at} \n'
+                f'page = {self.page} \n'
+                f'device_type = {self.device_type} \n')
