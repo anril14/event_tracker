@@ -2,9 +2,9 @@ from app.schemas.event import Event, InEvent, Metadata
 from app.db.queries.orm import EventSyncORM
 
 
-def add_event(event: InEvent):
-    EventSyncORM.insert_data(event)
-    return None
+def add_event(in_event: InEvent) -> Event:
+    orm_event: Event = EventSyncORM.insert_data(in_event)
+    return orm_event
 
 
 def get_all_events() -> list[Event]:

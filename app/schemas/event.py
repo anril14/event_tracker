@@ -5,16 +5,7 @@ from app.enums import DeviceType
 
 class Metadata(BaseModel):
     page: str
-    device_type: str
-
-    @field_validator('device_type', mode='after')
-    @classmethod
-    def validate_event_type(cls, value: str) -> str:
-        try:
-            DeviceType(value)
-        except ValueError:
-            raise ValueError(f'Invalid device type: {value}')
-        return value
+    device_type: DeviceType
 
 
 class Event(BaseModel):

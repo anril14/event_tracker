@@ -9,6 +9,7 @@ from app.api.events import event_router
 
 # Testing
 from app.db.queries.orm import EventSyncORM
+from app.enums import DeviceType
 from app.schemas.event import InEvent, Metadata
 
 app = FastAPI()
@@ -23,7 +24,7 @@ event = InEvent(
     event_type='1',
     metadata=Metadata(
         page='/event',
-        device_type='pc'
+        device_type=DeviceType('pc')
     ),
     user_id=123,
     sent_at=datetime.datetime.now()
@@ -35,4 +36,4 @@ EventSyncORM.insert_data(
     event
 )
 
-print(EventSyncORM.get_data())
+# print(EventSyncORM.get_data())

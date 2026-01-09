@@ -12,9 +12,9 @@ event_router = APIRouter(
 )
 
 
-@event_router.post('/', status_code=204)
-def create_event(event: InEvent):
-    add_event(event)
+@event_router.post('/', status_code=200)
+def create_event(in_event: InEvent) -> Event:
+    return add_event(in_event)
 
 
 @event_router.get('/')

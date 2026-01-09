@@ -6,11 +6,11 @@ from app.db.config import settings
 
 sync_engine = create_engine(
     url=settings.url_psycopg,
-    echo=True
+    echo=False
 )
 async_engine = create_async_engine(
     url=settings.url_asyncpg,
-    echo=True
+    echo=False
 )
 
 sync_session_factory = sessionmaker(sync_engine)
