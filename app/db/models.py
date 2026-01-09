@@ -1,14 +1,9 @@
 import datetime
-import enum
 
 from sqlalchemy import text
 from sqlalchemy.orm import Mapped, mapped_column
 from app.db.database import Base
-
-
-class DeviceType(enum.Enum):
-    mobile = 'mobile'
-    pc = 'pc'
+from app.enums import DeviceType
 
 
 class EventsOrm(Base):
@@ -16,7 +11,7 @@ class EventsOrm(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     event_type: Mapped[str]
-    user_id: Mapped[str]
+    user_id: Mapped[int]
     sent_at: Mapped[datetime.datetime] = mapped_column(server_default=text("TIMEZONE('utc', now())"))
     page: Mapped[str]
     device_type: Mapped[DeviceType]

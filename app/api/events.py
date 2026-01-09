@@ -1,20 +1,20 @@
 from fastapi import APIRouter
 
-from app.service.event_service import add_event, validate_event, get_all_events
+from app.service.event_service import add_event, get_all_events
 
-from app.schemas.event import Event
+from app.schemas.event import Event, InEvent
 
 print('Event router loaded')
 
 event_router = APIRouter(
-    prefix='/events'
+    prefix='/events',
+    tags=['events']
 )
 
 
-@event_router.post('/')
-def create_event(event: Event):
-    validated = validate_event(event)
-    return add_event(validated)
+@event_router.post('/', status_code=204)
+def create_event(event: InEvent):
+    add_event(event)
 
 
 @event_router.get('/')

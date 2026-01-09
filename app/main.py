@@ -1,3 +1,5 @@
+import datetime
+
 import uvicorn
 
 import os
@@ -7,7 +9,7 @@ from app.api.events import event_router
 
 # Testing
 from app.db.queries.orm import EventSyncORM
-from app.schemas.event import Event, Metadata
+from app.schemas.event import InEvent, Metadata
 
 app = FastAPI()
 
@@ -17,13 +19,14 @@ app.include_router(router=event_router)
 EventSyncORM.create_tables()
 
 # Testing
-event = Event(
+event = InEvent(
     event_type='1',
     metadata=Metadata(
         page='/event',
         device_type='pc'
     ),
-    user_id='123'
+    user_id=123,
+    sent_at=datetime.datetime.now()
 )
 EventSyncORM.insert_data(
     event

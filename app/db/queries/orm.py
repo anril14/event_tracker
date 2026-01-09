@@ -3,7 +3,7 @@ from sqlalchemy import text, insert, select
 from app.db.database import sync_session_factory
 from app.db.models import EventsOrm
 from app.db.database import sync_engine, Base
-from app.schemas.event import Event
+from app.schemas.event import InEvent
 
 
 class EventSyncORM:
@@ -14,7 +14,7 @@ class EventSyncORM:
         Base.metadata.create_all(sync_engine)
 
     @staticmethod
-    def insert_data(event: Event):
+    def insert_data(event: InEvent):
         with sync_session_factory() as session:
             new_event = EventsOrm(
                 event_type=event.event_type,
